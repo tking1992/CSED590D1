@@ -1,61 +1,24 @@
 import java.util.Scanner;
 
-public class Main {
-    public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
+class Budget {
+    String name;
+    double income;
+    double rent;
+    double food;
+    double transportation;
+    double carPayment;
+    double creditCardPayment;
+    double savings;
+    double totalBills;
+    double totalExpenses;
+    double moneyLeft;
 
-        String name;
-        double income;
-        double rent;
-        double food;
-        double transportation;
-        double carPayment;
-        double creditCardPayment;
-        double savings;
-        double billAmount;
-        double totalBills = 0;
-        double totalExpenses;
-        double moneyLeft;
-        int numberOfBills;
-
-        System.out.println("Welcome to the Monthly Budget Tracker!");
-
-        System.out.print("Enter your name: ");
-        name = input.nextLine();
-
-        System.out.print("Enter your monthly income: $");
-        income = input.nextDouble();
-
-        System.out.print("Enter your rent or housing cost: $");
-        rent = input.nextDouble();
-
-        System.out.print("Enter your monthly food cost: $");
-        food = input.nextDouble();
-
-        System.out.print("Enter your transportation cost: $");
-        transportation = input.nextDouble();
-
-        System.out.print("Enter your monthly car payment: $");
-        carPayment = input.nextDouble();
-
-        System.out.print("Enter your monthly credit card payment: $");
-        creditCardPayment = input.nextDouble();
-
-        System.out.print("Enter how many monthly bills you want to add, such as internet, water, or power: ");
-        numberOfBills = input.nextInt();
-
-        for (int i = 1; i <= numberOfBills; i++) {
-            System.out.print("Enter bill #" + i + " amount: $");
-            billAmount = input.nextDouble();
-            totalBills = totalBills + billAmount;
-        }
-
-        System.out.print("Enter how much money you want to put into savings: $");
-        savings = input.nextDouble();
-
+    public void calculateBudget() {
         totalExpenses = rent + food + transportation + carPayment + creditCardPayment + totalBills + savings;
         moneyLeft = income - totalExpenses;
+    }
 
+    public void displaySummary() {
         System.out.println();
         System.out.println("Budget Summary for " + name.toUpperCase());
         System.out.println("--------------------------------");
@@ -69,22 +32,72 @@ public class Main {
         System.out.println("Savings: $" + savings);
         System.out.println("Total expenses including savings: $" + totalExpenses);
         System.out.println("Money left after expenses: $" + moneyLeft);
+    }
 
-        // First if statement
+    public void displayBudgetStatus() {
         if (moneyLeft < 0) {
             System.out.println("Warning: Your expenses are higher than your income.");
         }
 
-        // Second if statement with else if and else
         if (moneyLeft >= 500) {
-            System.out.println("Budget Status: Great job! You have a over $500 left over.");
+            System.out.println("Budget Status: Great job! You have a strong amount of money left over.");
         } else if (moneyLeft >= 100) {
-            System.out.println("Budget Status: You have over $100 left over.");
+            System.out.println("Budget Status: You have some money left, but you may want to watch your spending.");
         } else if (moneyLeft >= 0) {
             System.out.println("Budget Status: You are close to spending your full income.");
         } else {
             System.out.println("Budget Status: You may need to lower some expenses or reduce savings for this month.");
         }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+
+        Budget userBudget = new Budget();
+
+        double billAmount;
+        int numberOfBills;
+
+        System.out.println("Welcome to the Monthly Budget Tracker!");
+
+        System.out.print("Enter your name: ");
+        userBudget.name = input.nextLine();
+
+        System.out.print("Enter your monthly income: $");
+        userBudget.income = input.nextDouble();
+
+        System.out.print("Enter your rent/housing cost: $");
+        userBudget.rent = input.nextDouble();
+
+        System.out.print("Enter your monthly food cost: $");
+        userBudget.food = input.nextDouble();
+
+        System.out.print("Enter your transportation cost: $");
+        userBudget.transportation = input.nextDouble();
+
+        System.out.print("Enter your monthly car payment: $");
+        userBudget.carPayment = input.nextDouble();
+
+        System.out.print("Enter your monthly credit card payment: $");
+        userBudget.creditCardPayment = input.nextDouble();
+
+        System.out.print("Enter how many monthly bills you want to add, such as internet, water, or power: ");
+        numberOfBills = input.nextInt();
+
+        for (int i = 1; i <= numberOfBills; i++) {
+            System.out.print("Enter bill #" + i + " amount: $");
+            billAmount = input.nextDouble();
+            userBudget.totalBills = userBudget.totalBills + billAmount;
+        }
+
+        System.out.print("Enter how much money you want to put into savings: $");
+        userBudget.savings = input.nextDouble();
+
+        userBudget.calculateBudget();
+        userBudget.displaySummary();
+        userBudget.displayBudgetStatus();
 
         input.close();
     }
